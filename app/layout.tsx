@@ -1,20 +1,28 @@
-import './globals.css';
+import { cn } from "@/lib/utils";
+import "./globals.css";
 
-import { GeistSans } from 'geist/font/sans';
+import { Inconsolata } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-let title = 'Next.js + Postgres Auth Starter';
+const inconsolata = Inconsolata({
+  subsets: ["latin"],
+});
+
+let title = "Change Detector";
 let description =
-  'This is a Next.js starter kit that uses NextAuth.js for simple email + password login and a Postgres database to persist the data.';
+  "Change Detector is a tool to monitor changes in any website using natural language. It will notify you when a change is detected.";
 
 export const metadata = {
   title,
   description,
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title,
     description,
   },
-  metadataBase: new URL('https://nextjs-postgres-auth.vercel.app'),
+  metadataBase: new URL("https://change-detector.com"),
 };
 
 export default function RootLayout({
@@ -24,7 +32,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={GeistSans.variable}>{children}</body>
+      {/* add background image from a url */}
+      <body className={cn(inconsolata.className)}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
+          <TooltipProvider>
+            <Toaster />
+            {children}
+          </TooltipProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
